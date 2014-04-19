@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 	private string lastCollision;
 	private Vector2 movement;
 
-	private int self;
+	private int self;	// Self is a value between 0 and 99. It is temporary and is used to determine the next current value of the player. It is basically just space for the number to be manipulated.
 	private int nextNumber;
 	private bool add = false;
 	private bool subtract = false;
@@ -48,8 +48,7 @@ public class PlayerController : MonoBehaviour
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		GameController.gameController.Score = 1;
-
+		if(other.tag != "Show" && other.tag != "Edge") GameController.gameController.Score = 1;
 		if (other.tag != "Show")
 		{
 			if (other.tag == "=")
@@ -78,7 +77,6 @@ public class PlayerController : MonoBehaviour
 					showProduct(GameController.gameController.CurrentNumber, nextNumber);
 					int temp = self % 10;
 					self = temp * nextNumber;
-					
 				}
 				if (divide) 
 				{
@@ -86,7 +84,8 @@ public class PlayerController : MonoBehaviour
 					int temp = self % 10;
 					self = temp / nextNumber;
 				}
-				
+
+				// Update the players current number and the self
 				if (self < 0) self = 100 - Mathf.Abs(self);
 				if (self > 99) self = self - 100;
 				GameController.gameController.CurrentNumber = self % 10;
