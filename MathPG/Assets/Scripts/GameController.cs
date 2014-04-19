@@ -4,10 +4,8 @@ using System.Collections;
 public class GameController : MonoBehaviour 
 {
 	public static GameController gameController;
-
-
-
-
+	public GUIText scoreText;
+	
 	#region Properties
 	private int score = 0;
 	public int Score
@@ -54,14 +52,15 @@ public class GameController : MonoBehaviour
 		//else if control exists and it isn't this instance, destroy this instance
 		else if(gameController != this)
 		{
-			Debug.Log ("Game control already exists, deleting this new one");
+			//Debug.Log ("Game control already exists, deleting this new one");
 			Destroy (gameObject);
 		}
 	}
 
 	void Update () 
 	{
-
+		if (Application.loadedLevelName == "TitleScreen") scoreText.text = ("Score: " + GameController.gameController.Score);
+		else scoreText.text = "";
 	}
 
 }

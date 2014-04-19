@@ -48,6 +48,8 @@ public class PlayerController : MonoBehaviour
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
+		GameController.gameController.Score = 1;
+
 		if (other.tag != "Show")
 		{
 			if (other.tag == "=")

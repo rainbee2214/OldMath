@@ -8,14 +8,12 @@ public class Timer : MonoBehaviour
 	void Start () 
 	{
 		targetTime = battleLength + Time.time;
-		//Debug.Log(battleLength);
-		//Debug.Log(Time.time);
+	
 	}
 	
 
 	void Update () 
 	{
-		//Debug.Log(Time.time);
 		if (Time.time > targetTime) Application.LoadLevel("TitleScreen");
 	}
 }

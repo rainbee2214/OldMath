@@ -7,8 +7,6 @@ public class SpriteController : MonoBehaviour
 
 	void Update () 
 	{
-		Debug.Log(Application.loadedLevelName);
-		//if (hasCollided) Destroy(this.gameObject);
 		if (Application.loadedLevelName != "TitleScreen")
 		{
 			renderer.enabled = false;
@@ -23,5 +21,6 @@ public class SpriteController : MonoBehaviour
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		hasCollided = true;
+
 	}
 }
