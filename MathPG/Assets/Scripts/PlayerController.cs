@@ -27,16 +27,10 @@ public class PlayerController : MonoBehaviour
 		renderer = gameObject.GetComponent<SpriteRenderer>();
 		renderer.sprite = sprites[GameController.gameController.CurrentNumber];
 
-
-
-
 	}
 
 	void Update()
 	{
-		//Debug.Log("Current Number: " + GameController.gameController.CurrentNumber);
-		//Debug.Log("Self: " + self);
-
 		renderer.sprite = sprites[GameController.gameController.CurrentNumber];
 	}
 
@@ -47,55 +41,19 @@ public class PlayerController : MonoBehaviour
 		rigidbody2D.velocity = movement;
 	}
 
-	void changeOperator(string operatorName)
+	void startBattle(int currentNumber)
 	{
-		add = false;
-		subtract = false;
-		multiply = false;
-		divide = false;
-		switch(operatorName)
-		{
-			case "+": add = true; break;
-			case "-": subtract = true; break;
-			case "multiply": multiply = true; break;
-			case "divide": divide = true; break;
-		}
-	}
-
-	void showProduct(int self, int nextNumber)
-	{
-		int product = self * nextNumber;
-		direction = transform.position;
-		direction.y += 1;
-		direction.x += 0.5f;
-		temp1 = Instantiate(prefabs[product % 10], direction, Quaternion.identity) as GameObject;
-		direction.x += -1;
-		if (product / 10 != 0) temp2 = Instantiate(prefabs[product / 10], direction, Quaternion.identity) as GameObject;
-
-	}
-
-	void showDividend(int self, int nextNumber)
-	{
-		int dividend = self / nextNumber;
-		int mod = self % nextNumber;
-		direction = transform.position;
-		direction.y += 1;
-		direction.x += 0.5f;
-		temp1 = Instantiate(prefabs[10], direction, Quaternion.identity) as GameObject;
-		direction.x += -1;
-		temp2 = Instantiate(prefabs[dividend], direction, Quaternion.identity) as GameObject;
-		direction.x += 2f;
-		temp3 = Instantiate(prefabs[mod], direction, Quaternion.identity) as GameObject;
-		temp3.transform.localScale = new Vector3(.75f, .75f, 1);
-		Debug.Log(dividend);
-		Debug.Log(dividend/10);
-		Debug.Log(dividend%10);
+		Application.LoadLevel("Battle" + currentNumber);
 	}
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
 		if (other.tag != "Show")
 		{
+			if (other.tag == "=")
+			{
+				startBattle(GameController.gameController.CurrentNumber);
+			}
 			// If it's an operator
 			if (other.tag == "+" || other.tag == "-" || other.tag == "multiply" || other.tag == "divide") 
 			{
@@ -135,5 +93,48 @@ public class PlayerController : MonoBehaviour
 			if(other.tag != "Edge") Destroy(other.gameObject);
 
 		}
+	}
+
+	void changeOperator(string operatorName)
+	{
+		add = false;
+		subtract = false;
+		multiply = false;
+		divide = false;
+		switch(operatorName)
+		{
+		case "+": add = true; break;
+		case "-": subtract = true; break;
+		case "multiply": multiply = true; break;
+		case "divide": divide = true; break;
+		}
+	}
+
+	void showProduct(int self, int nextNumber)
+	{
+		int product = self * nextNumber;
+		direction = transform.position;
+		direction.y += 1;
+		direction.x += 0.5f;
+		temp1 = Instantiate(prefabs[product % 10], direction, Quaternion.identity) as GameObject;
+		direction.x += -1;
+		if (product / 10 != 0) temp2 = Instantiate(prefabs[product / 10], direction, Quaternion.identity) as GameObject;
+		
+	}
+	
+	void showDividend(int self, int nextNumber)
+	{
+		int dividend = self / nextNumber;
+		int mod = self % nextNumber;
+		direction = transform.position;
+		direction.y += 1;
+		direction.x += 0.5f;
+		temp1 = Instantiate(prefabs[10], direction, Quaternion.identity) as GameObject;
+		direction.x += -1;
+		temp2 = Instantiate(prefabs[dividend], direction, Quaternion.identity) as GameObject;
+		direction.x += 2f;
+		temp3 = Instantiate(prefabs[mod], direction, Quaternion.identity) as GameObject;
+		temp3.transform.localScale = new Vector3(.75f, .75f, 1);
+		
 	}
 }
