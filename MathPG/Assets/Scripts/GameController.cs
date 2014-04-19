@@ -4,9 +4,15 @@ using System.Collections;
 public class GameController : MonoBehaviour 
 {
 	public static GameController gameController;
-	public GUIText scoreText;
+	public GUIText scoreText, currentOperatorText;
 	
 	#region Properties
+	private string currentOperator;
+	public string CurrentOperator
+	{
+		get {return currentOperator;}
+		set {currentOperator = value;}
+	}
 	private int score = 0;
 	public int Score
 	{
@@ -59,8 +65,17 @@ public class GameController : MonoBehaviour
 
 	void Update () 
 	{
-		if (Application.loadedLevelName == "TitleScreen") scoreText.text = ("Score: " + GameController.gameController.Score);
-		else scoreText.text = "";
+		if (Application.loadedLevelName == "TitleScreen") 
+		{
+			currentOperatorText.text = ("Operator: " + currentOperator);
+			scoreText.text = ("Score: " + GameController.gameController.Score);
+		}
+		else
+		{
+			scoreText.text = "";
+			currentOperatorText.text = "";
+		}
+
 	}
 
 }

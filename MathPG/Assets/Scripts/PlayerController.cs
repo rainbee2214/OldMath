@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 	public Sprite[] sprites;
 
 	private SpriteRenderer renderer;
-	private string lastCollision;
+	private string currentOperator;
 	private Vector2 movement;
 
 	private int self;	// Self is a value between 0 and 99. It is temporary and is used to determine the next current value of the player. It is basically just space for the number to be manipulated.
@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
+		GameController.gameController.CurrentOperator = currentOperator;
 		renderer.sprite = sprites[GameController.gameController.CurrentNumber];
 	}
 
@@ -59,7 +60,6 @@ public class PlayerController : MonoBehaviour
 			if (other.tag == "+" || other.tag == "-" || other.tag == "multiply" || other.tag == "divide") 
 			{
 				changeOperator(other.tag);
-				lastCollision = other.tag;
 				
 			}
 			
@@ -102,12 +102,20 @@ public class PlayerController : MonoBehaviour
 		subtract = false;
 		multiply = false;
 		divide = false;
+
+		currentOperator = operatorName;
 		switch(operatorName)
 		{
 		case "+": add = true; break;
 		case "-": subtract = true; break;
-		case "multiply": multiply = true; break;
-		case "divide": divide = true; break;
+		case "multiply": 
+			multiply = true; 
+			currentOperator = "*";
+			break;
+		case "divide": 
+			divide = true; 
+			currentOperator = "/";
+			break;
 		}
 	}
 
