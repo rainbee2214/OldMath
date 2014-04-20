@@ -49,8 +49,8 @@ public class PlayerController : MonoBehaviour
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		if(other.tag != "Show" && other.tag != "Edge") GameController.gameController.Score = 1;
-		if (other.tag != "Show")
+		if(other.tag != "Show" && other.tag != "Edge" && other.tag != "BattleField") GameController.gameController.Score = 1;
+		if (other.tag != "Show" && other.tag != "BattleField")
 		{
 			if (other.tag == "=")
 			{
