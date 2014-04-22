@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\BattleFieldController.cs" />
      <Compile Include="Assets\MathFunctions.cs" />
+     <Compile Include="Assets\MenuController.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\EdgeCollider.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
