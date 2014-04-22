@@ -6,7 +6,7 @@ public class SelectionController : MonoBehaviour
 	public int maxButtons;
 	public float startingLocation, distanceBetween;
 
-	private Vector2 location;/
+	private Vector2 location;
 	private float[] buttonLocations;	// = {-1.5f, -2.5f, -3.5f};
 	private int currentButton = 0;
 
