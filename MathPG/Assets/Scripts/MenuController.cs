@@ -21,6 +21,7 @@ public class MenuController : MonoBehaviour
 	private const float START_LOCATION_X = 0f;
 	private const float START_LOCATION_Y = 0.9f;
 	private const float	DISTANCE_BETWEEN = DISTANCE_BETWEEN_GUI * 2;
+	private float adjustedStartX = START_LOCATION_X;
 	private float adjustedGUIStartY = START_GUI_LOCATION_Y;
 	private float adjustedStartY = START_LOCATION_Y;
 
@@ -52,19 +53,19 @@ public class MenuController : MonoBehaviour
 		if (leftJustified)
 		{
 			buttonLocation.x = -1.4f;
-			guiLocation.x = 0.4f;
+			guiLocation.x = 0.1f;
 		}
 		else if (rightJustified)
 		{
 			buttonLocation.x = 1.4f;
-			guiLocation.x = 0.6f;
+			guiLocation.x = 0.9f;
 		} 
 		else
 		{
 			buttonLocation.x = START_LOCATION_X;
 			guiLocation.x = START_GUI_LOCATION_X;
 		}
-
+		adjustedStartX = buttonLocation.x;
 		if (centeredH)
 		{
 			setCenterHeight();
@@ -164,7 +165,7 @@ public class MenuController : MonoBehaviour
 			if (currentButton > maxButtons - 1) currentButton = 0;
 		}
 
-		selectorLocation.x = START_LOCATION_X *  cameraSize;
+		selectorLocation.x = adjustedStartX *  cameraSize;
 		selectorLocation.y = (buttons[currentButton].gameObject.transform.position.y);
 		gameObject.transform.position = selectorLocation;
 	}
