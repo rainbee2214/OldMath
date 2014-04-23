@@ -3,22 +3,25 @@ using System.Collections;
 
 public class MenuButtonController : MonoBehaviour 
 {
-	public bool isActive = false;
+
+	public bool isActiveB = false;
 	public Color activeColour, inactiveColour;
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		isActive = true;
+		//Debug.Log(isActive);
+		isActiveB = true;
 	}
 
 	void OnTriggerExit2D(Collider2D other)
 	{
-		isActive = false;
+		isActiveB = false;
 	}
 
 	void Update () 
 	{
-		if (isActive)
+
+		if (isActiveB)
 		{
 			renderer.material.color = activeColour;
 		}

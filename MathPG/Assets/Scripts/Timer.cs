@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Timer : MonoBehaviour 
 {
-	public static float battleLength = 5;
+	public static float battleLength = 1;
 	private float targetTime;
 	void Start () 
 	{
@@ -14,6 +14,6 @@ public class Timer : MonoBehaviour
 
 	void Update () 
 	{
-		if (Time.time > targetTime) Application.LoadLevel("TitleScreen");
+		if (Time.time > targetTime) Application.LoadLevel("Menu");
 	}
 }
