@@ -3,68 +3,68 @@ using System.Collections;
 
 public class MenuController : MonoBehaviour 
 {	
-	private const float DEFAULT_BUTTON_START_X = 0f, DEFAULT_BUTTON_START_Y = 0.9f, DEFAULT_BUTTON_DISTANCE = -0.2f;
-	private const float DEFAULT_GUI_START_X = 0.5f, DEFAULT_GUI_START_Y = 0.95f, DEFAULT_GUI_DISTANCE = -0.1f;
+	private const float DEFAULT_BUTTON_START_X = 0f, 
+						DEFAULT_BUTTON_START_Y = 0.9f, 
+						DEFAULT_BUTTON_DISTANCE = -0.2f,
+						DEFAULT_GUI_START_X = 0.5f, 
+						DEFAULT_GUI_START_Y = 0.95f, 
+						DEFAULT_GUI_DISTANCE = -0.1f;
 	
-	private float buttonStartY = DEFAULT_BUTTON_START_Y;
-	private float buttonStartX = DEFAULT_BUTTON_START_X;
-	private float guiStartY = DEFAULT_GUI_START_Y;
-	private float guiStartX = DEFAULT_GUI_START_Y;
+	private float buttonStartY;
+	private float buttonStartX;
+	private float guiStartY;
+	private float guiStartX;
 	
 	private Vector3 selectorLocation;
 	private Vector3 buttonLocation;
 	private Vector3 guiLocation;
 	
-	// Everything is scaled to the camera size
 	private float cameraSize;
 	private Vector3 scale;
 	private GUIText[] optionsGUIText;
 
-	// Button
 	private GameObject[] buttons;
 	private int currentButton = 0;
 	private int maxButtons;
 	private float buttonWidth = 1;
 
-	// Variable aspects
-	public Camera camera;
+	// Inspector Variables
+	public Camera cameraReference;
 	public GameObject button;
-	public GUIText guiText;
-	public string[] optionsText;
+	public GUIText guiTextReference;
+	public string[] menuOptionText;
 	public string[] targetScene;
 	
-	public bool justifyLeft, justifyRight;
-	public bool centerVertically = true;
+	public bool justifyLeft, 
+				justifyRight,
+				centerVertically = true;
 
+	public ParticleSystem particles;
 
 	void Start () 
 	{
-		maxButtons = optionsText.Length;
-		// Set the starting position of the menu based on user input from the inspector
+		maxButtons = menuOptionText.Length;
+		//Set the starting position of the menu based on user input from the inspector
 		setStartingPositions();
 
-		cameraSize = camera.camera.orthographicSize;
+		//Get the current camera's size and scale accordingly
+		cameraSize = cameraReference.camera.orthographicSize;
+		scale = new Vector3(1,cameraSize * 0.15f,1);
+		//Declare the buttons and text
 		buttons = new GameObject[maxButtons];
 		optionsGUIText = new GUIText[maxButtons];
-		scale = new Vector3(1,cameraSize * 0.15f,1);
-	
-		//setPosition("GUIText");
+		
+		//Create text and buttons, scaled and positioned
 		for (int i = 0; i < maxButtons; i++)
 		{
-			// Create GUI Text. 
 			guiLocation.y =  guiStartY + DEFAULT_GUI_DISTANCE * i;
-			optionsGUIText[i] = Instantiate(guiText, guiLocation, Quaternion.identity) as GUIText;
-			optionsGUIText[i].text = optionsText[i];
+			optionsGUIText[i] = Instantiate(guiTextReference, guiLocation, Quaternion.identity) as GUIText;
+			optionsGUIText[i].text = menuOptionText[i];
 			optionsGUIText[i].name = ("Text" + i);
-		}
 
-		//setPosition("Button");
-		for (int i = 0; i < maxButtons; i++)
-		{
-			// Create "Buttons"
 			buttonLocation.y = buttonStartY + DEFAULT_BUTTON_DISTANCE * i;
 			buttons[i] = Instantiate(button, buttonLocation * cameraSize, Quaternion.identity) as GameObject;
-			buttonWidth = optionsText[i].Length;
+			buttonWidth = menuOptionText[i].Length;
 			scale.x = (buttonWidth * cameraSize) / 10;
 			buttons[i].gameObject.transform.localScale = scale;
 			buttons[i].name = ("Button" + i);
@@ -79,11 +79,15 @@ public class MenuController : MonoBehaviour
 		}
 		if (Input.GetButtonDown("M"))
 		{
+			particles.particleSystem.Stop();
+			particles.particleSystem.Play();
 			currentButton--;
 			if (currentButton < 0) currentButton = maxButtons - 1;
 		}
 		if (Input.GetButtonDown("N"))
 		{
+			particles.particleSystem.Stop();
+			particles.particleSystem.Play();
 			currentButton++;
 			if (currentButton > maxButtons - 1) currentButton = 0;
 		}
@@ -92,6 +96,7 @@ public class MenuController : MonoBehaviour
 		selectorLocation.x = buttonStartX * cameraSize;
 		selectorLocation.y = (buttons[currentButton].gameObject.transform.position.y);
 		gameObject.transform.position = selectorLocation;
+		particles.transform.position = selectorLocation;
 	}
 
 	void setStartingPositions()
